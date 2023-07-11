@@ -21,7 +21,7 @@ class Persona{
     }
 
     public int getEdad() {
-        return edad;//
+        return edad;/////
     }
 
     public String baseInfo() {
