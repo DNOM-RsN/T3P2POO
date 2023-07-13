@@ -83,8 +83,7 @@ abstract class Persona{
     public abstract void  baseInfo();
     
 } 
-
-class Doctor extends Persona{
+class Doctor extends Persona {
 
     public Doctor(String nombre, int edad) {
         super(nombre, edad);
@@ -92,9 +91,10 @@ class Doctor extends Persona{
 
     @Override
     public void baseInfo() {
-       
+  
     }
 }
+
 
 class Deportista extends Persona{
 
@@ -132,7 +132,7 @@ public class T3P2POO {
                 case 2: 
                     break;
                 case 3:
-                    datosDeRegistros(registro);
+                    datosDeRegistros(scanner,registro);
                     break;
                 case 4:
                     eliPersonxId(scanner,registro);
@@ -147,40 +147,107 @@ public class T3P2POO {
         } while (opcion != 5);
     }
     
-    private static void datosDeRegistros(ArrayList<Persona> registro) {
-        System.out.println("************************************");
+    private static void datosDeRegistros(Scanner scanner, ArrayList<Persona> registro) {
+        System.out.println("----- MENÚ DE REGISTROS -----");
+        System.out.println("1. Mostrar Doctores");
+        System.out.println("2. Mostrar Deportistas");
+        System.out.println("3. Mostrar todas las personas registradas");
+        System.out.print("Ingrese una opción: ");
+        int opcion = Integer.parseInt(scanner.nextLine());
+
+        switch (opcion) {
+            case 1:
+                mostrarDoctores(registro);
+                break;
+            case 2:
+                mostrarDeportistas(registro);
+                break;
+            case 3:
+                mostrarTodasLasPersonas(registro);
+                break;
+            default:
+                System.out.println("Opción inválida. Regresando al menú principal.");
+        }
+    }
+
+    private static void mostrarDoctores(ArrayList<Persona> registro) {
+        System.out.println("----- DOCTORES REGISTRADOS -----");
+        boolean encontrados = false;
+
+        for (Persona persona : registro) {
+            if (persona instanceof Doctor) {
+                persona.baseInfo();
+                encontrados = true;
+            }
+        }
+
+        if (!encontrados) {
+            System.out.println("No hay doctores registrados.");
+        }
+
+        System.out.println("---------------------------------");
+    }
+
+    private static void mostrarDeportistas(ArrayList<Persona> registro) {
+        System.out.println("----- DEPORTISTAS REGISTRADOS -----");
+        boolean encontrados = false;
+
+        for (Persona persona : registro) {
+            if (persona instanceof Deportista) {
+                persona.baseInfo();
+                encontrados = true;
+            }
+        }
+
+        if (!encontrados) {
+            System.out.println("No hay deportistas registrados.");
+        }
+
+        System.out.println("-----------------------------------");
+    }
+
+    private static void mostrarTodasLasPersonas(ArrayList<Persona> registro) {
+        System.out.println("----- TODAS LAS PERSONAS REGISTRADAS -----");
         if (registro.isEmpty()) {
             System.out.println("No hay personas registradas.");
         } else {
-            System.out.println("Personas registradas:");
             for (Persona persona : registro) {
                 persona.baseInfo();
             }
         }
-        System.out.println("************************************");
+        System.out.println("-----------------------------------------");
+    
     }
     
     private static void eliPersonxId(Scanner scanner, ArrayList<Persona> registro) {
-        System.out.println("Ingrese el ID de la persona a eliminar:");
+        System.out.print("Ingrese el ID de la persona a eliminar: ");
         String id = scanner.nextLine();
 
-        boolean busqueda = false;
+        Persona Bencontrada = null;
 
-        for (int i = 0; i < registro.size(); i++) {
-            Persona persona = registro.get(i);
+        for (Persona persona : registro) {
             if (persona.getId().equals(id)) {
-                registro.remove(i);
-                busqueda = true;
+                Bencontrada = persona;
                 break;
             }
         }
-        System.out.println("************************************");
-        if (busqueda) {
-            System.out.println("Persona eliminada exitosamente.");
+
+        System.out.println("----- INFORMACIÓN DE LA PERSONA -----");
+        if (Bencontrada != null) {
+            Bencontrada.baseInfo();
+            System.out.println("-------------------------------------");
+            System.out.print("¿Desea eliminar esta persona? (S/N): ");
+            String opcion = scanner.nextLine();
+            if (opcion.equalsIgnoreCase("S")) {
+                registro.remove(Bencontrada);
+                System.out.println("Persona eliminada exitosamente.");
+            } else {
+                System.out.println("Eliminación cancelada.");
+            }
         } else {
             System.out.println("No se encontró ninguna persona con el ID proporcionado.");
         }
-        System.out.println("************************************");
+        System.out.println("-------------------------------------");
     }
 }
 
