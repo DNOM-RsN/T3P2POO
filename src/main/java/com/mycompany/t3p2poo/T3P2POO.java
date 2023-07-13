@@ -8,7 +8,7 @@ package com.mycompany.t3p2poo;
  *
  * @author DELL
  */
-class Persona{
+abstract class Persona{
     private String nombre;
     private int edad;
 
@@ -24,9 +24,7 @@ class Persona{
         return edad;
     }
 
-    public String baseInfo() {
-        return "Nombe: " + getNombre() + "\nEdad: " + getEdad() + "\n";
-    }
+    public abstract void  baseInfo();
 } 
 
 class Doctor extends Persona{
@@ -34,12 +32,22 @@ class Doctor extends Persona{
     public Doctor(String nombre, int edad) {
         super(nombre, edad);
     }
+
+    @Override
+    public void baseInfo() {
+       
+    }
 }
 
 class Deportista extends Persona{
 
     public Deportista(String nombre, int edad) {
         super(nombre, edad);
+    }
+
+    @Override
+    public void baseInfo() {
+        
     }
 }
 public class T3P2POO {
