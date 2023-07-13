@@ -50,6 +50,8 @@ class Deportista extends Persona{
     @Override
     public void baseInfo() {
         
+        System.out.println("Hello");
+    
     }
 }
 public class T3P2POO {
