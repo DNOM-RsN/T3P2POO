@@ -4,6 +4,10 @@
 
 package com.mycompany.t3p2poo;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -11,52 +15,143 @@ import java.util.Scanner;
  * @author DELL
  */
 abstract class Persona{
-    private String nombre;
-    private int edad;
+    protected String nombre;
+    protected String id;
+    protected String generarID() {
+        Random random = new Random();
+        int numero = random.nextInt(90000) + 10000;
+        return String.format("%05d", numero);
+    }
+    protected LocalDate fechaNacimiento;
+    protected String direccion;
+    protected String telefono;
+    protected String email;
+    protected String genero;
 
-    public Persona (String nombre, int edad) {
+    public Persona (String nombre, LocalDate fechaNacimiento) {
         this.nombre = nombre;
-        this.edad = edad;
+        this.id = generarID();
+        this.fechaNacimiento = fechaNacimiento;
     }
     public String getNombre() {
         return nombre;
     }
+    public String getId() {
+        return id;
+    }
+   public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
 
     public int getEdad() {
-        return edad;
+        LocalDate fechaActual = LocalDate.now();
+        return Period.between(fechaNacimiento, fechaActual).getYears();
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public abstract void  baseInfo();
+    
 } 
+class Doctor extends Persona {
 
-class Doctor extends Persona{
-
-    public Doctor(String nombre, int edad) {
+    public Doctor(String nombre, LocalDate edad) {
         super(nombre, edad);
     }
 
     @Override
     public void baseInfo() {
-       
+  
     }
 }
 
+
 class Deportista extends Persona{
 
-    public Deportista(String nombre, int edad) {
+    public Deportista(String nombre, LocalDate edad) {
         super(nombre, edad);
     }
+     private int peso;
+        private int altura;
+        
+         public int setPeso(int peso) {
+        this.peso = peso;
+                 
+         } 
+                 
+    public int getPeso()  {
+        return peso;
+    }
+    
+        public int setAltura(int altura) {
+        this.altura = altura;
+        }     
+         
+             
+    public int getAltura() {
+        return altura;
+    }
+        
+        
+       
 
     @Override
     public void baseInfo() {
         
-        System.out.println("Hello");
-    
+        System.out.println("Nombre del deportista:" +nombre );
+        System.out.println("Direccion del deportista:" +direccion);
+        System.out.println("Genero del deportista:" +genero );
+        System.out.println("Fecha de Nacimiento del deportista:" +fechaNacimiento);
+        System.out.println("Telefono del deportista:" +telefono );
+        System.out.println("Email del deportista:" +email );
+        System.out.println("Peso del deportista:" +peso  );
+        System.out.println("Altura del deportista:" +altura );
+        
     }
+        
+       
+        
+    
+       
+
+
+        
+    
 }
 public class T3P2POO {
-
+    
     public static void main(String[] args) {     
+        ArrayList<Persona> registro = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -76,8 +171,10 @@ public class T3P2POO {
                 case 2: 
                     break;
                 case 3:
+                    datosDeRegistros(scanner,registro);
                     break;
                 case 4:
+                    eliPersonxId(scanner,registro);
                     break;
                 case 5:
                     System.out.println("Saliendo del programa...");
@@ -88,4 +185,110 @@ public class T3P2POO {
             System.out.println();
         } while (opcion != 5);
     }
+    
+    private static void datosDeRegistros(Scanner scanner, ArrayList<Persona> registro) {
+        System.out.println("----- MENÚ DE REGISTROS -----");
+        System.out.println("1. Mostrar Doctores");
+        System.out.println("2. Mostrar Deportistas");
+        System.out.println("3. Mostrar todas las personas registradas");
+        System.out.print("Ingrese una opción: ");
+        int opcion = Integer.parseInt(scanner.nextLine());
+
+        switch (opcion) {
+            case 1:
+                mostrarDoctores(registro);
+                break;
+            case 2:
+                mostrarDeportistas(registro);
+                break;
+            case 3:
+                mostrarTodasLasPersonas(registro);
+                break;
+            default:
+                System.out.println("Opción inválida. Regresando al menú principal.");
+        }
+    }
+
+    private static void mostrarDoctores(ArrayList<Persona> registro) {
+        System.out.println("----- DOCTORES REGISTRADOS -----");
+        boolean encontrados = false;
+
+        for (Persona persona : registro) {
+            if (persona instanceof Doctor) {
+                persona.baseInfo();
+                encontrados = true;
+            }
+        }
+
+        if (!encontrados) {
+            System.out.println("No hay doctores registrados.");
+        }
+
+        System.out.println("---------------------------------");
+    }
+
+    private static void mostrarDeportistas(ArrayList<Persona> registro) {
+        System.out.println("----- DEPORTISTAS REGISTRADOS -----");
+        boolean encontrados = false;
+
+        for (Persona persona : registro) {
+            if (persona instanceof Deportista) {
+                persona.baseInfo();
+                encontrados = true;
+            }
+        }
+
+        if (!encontrados) {
+            System.out.println("No hay deportistas registrados.");
+        }
+
+        System.out.println("-----------------------------------");
+    }
+
+    private static void mostrarTodasLasPersonas(ArrayList<Persona> registro) {
+        System.out.println("----- TODAS LAS PERSONAS REGISTRADAS -----");
+        if (registro.isEmpty()) {
+            System.out.println("No hay personas registradas.");
+        } else {
+            for (Persona persona : registro) {
+                persona.baseInfo();
+            }
+        }
+        System.out.println("-----------------------------------------");
+    
+    }
+    
+    private static void eliPersonxId(Scanner scanner, ArrayList<Persona> registro) {
+        System.out.print("Ingrese el ID de la persona a eliminar: ");
+        String id = scanner.nextLine();
+
+        Persona Bencontrada = null;
+
+        for (Persona persona : registro) {
+            if (persona.getId().equals(id)) {
+                Bencontrada = persona;
+                break;
+            }
+        }
+
+        System.out.println("----- INFORMACIÓN DE LA PERSONA -----");
+        if (Bencontrada != null) {
+            Bencontrada.baseInfo();
+            System.out.println("-------------------------------------");
+            System.out.print("¿Desea eliminar esta persona? (S/N): ");
+            String opcion = scanner.nextLine();
+            if (opcion.equalsIgnoreCase("S")) {
+                registro.remove(Bencontrada);
+                System.out.println("Persona eliminada exitosamente.");
+            } else {
+                System.out.println("Eliminación cancelada.");
+            }
+        } else {
+            System.out.println("No se encontró ninguna persona con el ID proporcionado.");
+        }
+        System.out.println("-------------------------------------");
+    }
 }
+
+
+
