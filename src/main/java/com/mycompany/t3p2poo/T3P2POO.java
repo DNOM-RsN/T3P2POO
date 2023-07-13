@@ -4,6 +4,8 @@
 
 package com.mycompany.t3p2poo;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -13,10 +15,12 @@ import java.util.Scanner;
 abstract class Persona{
     private String nombre;
     private int edad;
+    private String id;
 
     public Persona (String nombre, int edad) {
         this.nombre = nombre;
         this.edad = edad;
+        this.id = generarID();
     }
     public String getNombre() {
         return nombre;
@@ -27,6 +31,11 @@ abstract class Persona{
     }
 
     public abstract void  baseInfo();
+    private String generarID() {
+        Random random = new Random();
+        int numero = random.nextInt(90000) + 10000;
+        return String.format("%05d", numero);
+    }
 } 
 
 class Doctor extends Persona{
@@ -53,8 +62,9 @@ class Deportista extends Persona{
     }
 }
 public class T3P2POO {
-
+    
     public static void main(String[] args) {     
+        ArrayList<Persona> registro = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -74,6 +84,7 @@ public class T3P2POO {
                 case 2: 
                     break;
                 case 3:
+                    datosDeRegistros(registro);
                     break;
                 case 4:
                     break;
@@ -86,4 +97,18 @@ public class T3P2POO {
             System.out.println();
         } while (opcion != 5);
     }
+    
+    private static void datosDeRegistros(ArrayList<Persona> registro) {
+        System.out.println("************************************");
+        if (registro.isEmpty()) {
+            System.out.println("No hay personas registradas.");
+        } else {
+            System.out.println("Personas registradas:");
+            for (Persona persona : registro) {
+                persona.baseInfo();
+            }
+        }
+        System.out.println("************************************");
+    }
 }
+
