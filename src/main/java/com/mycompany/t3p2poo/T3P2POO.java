@@ -4,6 +4,8 @@
 
 package com.mycompany.t3p2poo;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,28 +16,72 @@ import java.util.Scanner;
  */
 abstract class Persona{
     private String nombre;
-    private int edad;
     private String id;
-
-    public Persona (String nombre, int edad) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.id = generarID();
-    }
-    public String getNombre() {
-        return nombre;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public abstract void  baseInfo();
     private String generarID() {
         Random random = new Random();
         int numero = random.nextInt(90000) + 10000;
         return String.format("%05d", numero);
     }
+    private LocalDate fechaNacimiento;
+    private String direccion;
+    private String telefono;
+    private String email;
+    private String genero;
+
+    public Persona (String nombre, LocalDate fechaNacimiento) {
+        this.nombre = nombre;
+        this.id = generarID();
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public String getId() {
+        return id;
+    }
+   public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public int getEdad() {
+        LocalDate fechaActual = LocalDate.now();
+        return Period.between(fechaNacimiento, fechaActual).getYears();
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public abstract void  baseInfo();
+    
 } 
 
 class Doctor extends Persona{
@@ -87,6 +133,7 @@ public class T3P2POO {
                     datosDeRegistros(registro);
                     break;
                 case 4:
+                    eliPersonxId(scanner,registro);
                     break;
                 case 5:
                     System.out.println("Saliendo del programa...");
@@ -107,6 +154,29 @@ public class T3P2POO {
             for (Persona persona : registro) {
                 persona.baseInfo();
             }
+        }
+        System.out.println("************************************");
+    }
+    
+    private static void eliPersonxId(Scanner scanner, ArrayList<Persona> registro) {
+        System.out.println("Ingrese el ID de la persona a eliminar:");
+        String id = scanner.nextLine();
+
+        boolean busqueda = false;
+
+        for (int i = 0; i < registro.size(); i++) {
+            Persona persona = registro.get(i);
+            if (persona.getId().equals(id)) {
+                registro.remove(i);
+                busqueda = true;
+                break;
+            }
+        }
+        System.out.println("************************************");
+        if (busqueda) {
+            System.out.println("Persona eliminada exitosamente.");
+        } else {
+            System.out.println("No se encontró ninguna persona con el ID proporcionado.");
         }
         System.out.println("************************************");
     }
