@@ -105,8 +105,7 @@ class Deportista extends Persona{
         private int altura;
         
          public int setPeso(int peso) {
-        this.peso = peso;
-                 
+        this.peso = peso;       
          } 
                  
     public int getPeso()  {
@@ -138,19 +137,12 @@ class Deportista extends Persona{
         System.out.println("Altura del deportista:" +altura );
         
     }
-        
-       
-        
-    
-       
-
-
-        
-    
+           
+     
 }
 public class T3P2POO {
     
-    public static void main(String[] args) {     
+    public static void main(String[] args, String telefono1) {     
         ArrayList<Persona> registro = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -169,6 +161,41 @@ public class T3P2POO {
                 case 1:
                     break;
                 case 2: 
+                        int tipoV;
+                    do
+                    { 
+                    
+                                System.out.println("\n ** Agregar Deportista** \n");
+                                
+                                System.out.print("Ingrese nombre del deportista: ");
+                                String nombre = scanner.next();
+                                
+                                System.out.print("Ingrese Modelo Del Vehiculo: ");
+                                String direccion = scanner.next();
+                                
+                                 System.out.print("Ingrese Año del Vehiculo: ");
+                                String genero = scanner.next();
+                                
+                                System.out.print("Ingrese Año del Vehiculo: ");
+                                String fechaNacimiento = scanner.next();
+                                
+                                System.out.print("Ingrese Año del Vehiculo: ");
+                                String telefono = scanner.next();
+                                
+                                 System.out.print("Ingrese Año del Vehiculo: ");
+                                String email = scanner.next();
+                                
+                                 System.out.print("Ingrese Año del Vehiculo: ");
+                                String peso = scanner.next();
+                                
+                                 System.out.print("Ingrese Año del Vehiculo: ");
+                                String altura = scanner.next();
+                                
+                                Deportista futbolista;
+                futbolista = new Deportista ( String nombre,  String direccion,  String genero,  LocalDate fechaNacimiento, String , String telefono1 = telefono;
+String email, int peso, int altura ) {}
+                Persona Persona = null;
+                                registro.add(Persona);
                     break;
                 case 3:
                     datosDeRegistros(scanner,registro);
