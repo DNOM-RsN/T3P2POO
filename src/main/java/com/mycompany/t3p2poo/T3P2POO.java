@@ -84,29 +84,41 @@ abstract class Persona{
     
 } 
 class Doctor extends Persona {
+    private String especialidad;
 
-    public Doctor(String nombre, int edad) {
-        super(nombre, edad);
+    public Doctor(String nombre, LocalDate fechaNacimiento, String especialidad) {
+        super(nombre, fechaNacimiento);
+        this.especialidad = especialidad;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
     }
 
     @Override
     public void baseInfo() {
-  
+        System.out.println("ID: " + getId());
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("Fecha de Nacimiento: " + getFechaNacimiento());
+        System.out.println("Edad: " + getEdad());
+        System.out.println("Especialidad: " + especialidad);
+        System.out.println("Dirección: " + getDireccion());
+        System.out.println("Teléfono: " + getTelefono());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Género: " + getGenero());
+        System.out.println("-----------");
     }
-}
 
 
 class Deportista extends Persona{
 
     public Deportista(String nombre, int edad) {
-        super(nombre, edad);
+//        super(nombre, edad);
     }
 
     @Override
     public void baseInfo() {
         
-        System.out.println("Hello");
-    
     }
 }
 public class T3P2POO {
@@ -128,6 +140,7 @@ public class T3P2POO {
 
             switch (opcion) {
                 case 1:
+                    registrarDoctor(scanner,registro);
                     break;
                 case 2: 
                     break;
@@ -146,7 +159,34 @@ public class T3P2POO {
             System.out.println();
         } while (opcion != 5);
     }
-    
+    private static void registrarDoctor(Scanner scanner, ArrayList<Persona> registro) {
+        System.out.print("Ingrese el nombre del doctor: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese la fecha de nacimiento (formato: YYYY-MM-DD): ");
+        String fechaNacimientoString = scanner.nextLine();
+        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoString);
+        System.out.print("Ingrese la especialidad del doctor: ");
+        String especialidad = scanner.nextLine();
+        System.out.print("Ingrese la dirección del doctor: ");
+        String direccion = scanner.nextLine();
+        System.out.print("Ingrese el teléfono del doctor: ");
+        String telefono = scanner.nextLine();
+        System.out.print("Ingrese el email del doctor: ");
+        String email = scanner.nextLine();
+        System.out.print("Ingrese el género del doctor: ");
+        String genero = scanner.nextLine();
+
+        Doctor doctor = new Doctor(nombre, fechaNacimiento, especialidad);
+        doctor.setDireccion(direccion);
+        doctor.setTelefono(telefono);
+        doctor.setEmail(email);
+        doctor.setGenero(genero);
+
+        registro.add(doctor);
+
+        System.out.println("Doctor registrado exitosamente. ID: " + doctor.getId());
+    }
+
     private static void datosDeRegistros(Scanner scanner, ArrayList<Persona> registro) {
         System.out.println("----- MENÚ DE REGISTROS -----");
         System.out.println("1. Mostrar Doctores");
