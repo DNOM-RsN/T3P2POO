@@ -108,13 +108,12 @@ class Doctor extends Persona {
         System.out.println("Género: " + getGenero());
         System.out.println("-----------");
     }
-}
 
 
 class Deportista extends Persona{
 
     public Deportista(String nombre, int edad) {
-        super(nombre, edad);
+//        super(nombre, edad);
     }
 
     @Override
